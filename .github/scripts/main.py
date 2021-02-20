@@ -3,16 +3,24 @@ import os
 
 stream = os.popen("git describe --abbrev=0 --tags")
 latest_tag = stream.read().strip("\n")
+print("found latest tag", latest_tag)
 
+print("fetching time series from npm")
 response = requests.get("https://registry.npmjs.com/@forge/cli/")
+print("fetched time series from npm")
 
 timeseries: dict = response.json()["time"]
 
-idx = list(timeseries.keys()).index(latest_tag)
-new_list = list(timeseries.keys())[idx + 1 :]
+timeseries_keys = list(timeseries.keys())
 
+print(f"found {len(timeseries_keys)} timeseries")
 
-for version in new_list:
+idx = timeseries_keys.index(latest_tag)
+newer_versions = timeseries_keys[idx + 1 :]
+
+print("found the following, newer versions:", newer_versions)
+
+for version in newer_versions:
     print("creating empty commit for version", version)
     os.popen(f'git commit --allow-empty -m "v{version}"')
     print("creating tag for version", version)
