@@ -1,6 +1,8 @@
 import requests
 import os
 
+print("=== START ===")
+
 stream = os.popen("git describe --abbrev=0 --tags")
 latest_tag = stream.read().strip("\n")
 print("found latest tag", latest_tag)
@@ -27,3 +29,8 @@ for version in newer_versions:
     os.popen(f'git tag -a {version} -m "v{version}"')
     print("pushing tag for version", version)
     os.popen(f"git push origin {version}")
+
+print("pushed tags, now pushing commits")
+os.popen(f"git push")
+
+print("=== DONE ===")
