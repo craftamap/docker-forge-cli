@@ -1,3 +1,5 @@
+**Achived: As Docker does not build images automatically anymore, and some problems occured with the containers, this project is archived**
+
 # forge-cli
 
 **DISCLAIMER:** This is an inoffical docker container and is not associated with Atlassian. 
